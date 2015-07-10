@@ -1,0 +1,135 @@
+{%extends 'base.html'%}
+{% load i18n %}
+{% block content %}
+
+
+<script src='//api-maps.yandex.ru/2.0/?load=package.standard&lang=ru-RU'></script>
+
+<script type='text/javascript'>
+
+	ymaps.ready(init);
+
+	function init () {
+		var myMap = new ymaps.Map('contacts-map', {
+			center: [{{ offices.0.get_center_latitude }}, {{ offices.0.get_center_longitude }}],
+			zoom: {{ offices.0.zoom }}
+		}),
+
+		{% for office in offices %}
+
+			office_{{ office.id }} = new ymaps.Placemark(
+				[{{ office.get_latitude }}, {{ office.get_longitude }}],
+				{
+					balloonContentHeader: '{{ office.name }}',
+					balloonContentBody: '{{ office.description }}',
+					balloonContentFooter: '{{ office.address }}',
+					hintContent: '{{ office.name }}'
+				},
+				{
+					preset: 'twirl#darkgreenDotIcon',
+				}
+			);
+			myMap.geoObjects.add(office_{{ office.id }});
+
+		{% endfor %}
+
+		myMap.behaviors.disable('scrollZoom');
+
+		$('.b-office').on('click', function() {
+			myMap.setZoom($(this).data('zoom'));
+			myMap.setCenter($(this).data('center'));
+		});
+	}
+
+</script>
+
+<div class='b-wrapper b-contactpage'>
+
+<h1>{% trans "Contacts" %}</h1>
+
+<ul class='b-offices'>
+	{% for office in offices %}
+		<li class='b-office'
+			data-zoom='{{ office.zoom }}'
+			data-center='[{{ office.get_center_latitude }}, {{ office.get_center_longitude }}]'
+			data-phone='{{ office.phone }}'
+			data-email='{{ office.email }}'
+			data-address='{{ office.address }}'
+		>
+			<b class='b-office__name'>{{ office.name }}</b>
+
+			{% if office.description %}
+				<span class='b-office__desc'>{{ office.description }}</span>
+			{% endif %}
+			{% if office.photo %}
+				<img src='{{ office.photo.url }}' alt='{{ office.name }}' class='b-office_photo'>
+			{% endif %}
+			{% if office.phone %}
+				<span class='b-office__phones'>
+					{% for phone in office.phones %}
+						<span class='b-office__phone'>{{ phone|safe }}</span>
+					{% endfor %}
+				</span>
+			{% endif %}
+			{% if office.email %}
+				<span class='b-office__email'>{{ office.email }}</span>
+			{% endif %}
+			{% if office.address %}
+				<span class='b-office__address'>{{ office.address|safe }}</span>
+			{% endif %}
+			{% if office.www %}
+				<a class='b-office__www' href='{{ office.www }}'>{{ office.www|safe }}</a>
+			{% endif %}
+		</li>
+	{% endfor %}
+</ul>
+
+<div class='b-contact-map' id='contacts-map' ></div>
+
+<div class='b-contacts-form'>
+	{%if ok %}
+		<h3>{% trans "We received your message!" %}</h3>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	{% else %}
+		<h3>{% trans "Send a message!" %}</h3>
+
+		{% for error in form.non_field_errors %}
+			<span class='b-error'>{{ error|safe }}</span>
+		{% endfor %}
+
+		<form class='b-form m-contacts' method='POST' action=''>
+			{% csrf_token %}
+
+			{% for field in form %}
+				<ul class='b-field
+					{% if field.errors %}m-field_error{% endif %}
+					{% if field.field.required %}m-field_required{% endif %}
+				'>
+					<li class='b-field__label'>{{ field.label_tag }}</li>
+					{% if field.errors %}
+						<li class='b-field__errors'>
+							{% for error in field.errors %}
+								{{ error|safe }}
+							{% endfor %}
+						</li>
+					{% endif %}
+
+					<li class='b-field__element'>{{ field }}</li>
+				</ul><!-- b-field -->
+			{% endfor %}
+
+			<input class='b-button' type='submit' value='{% trans "Submit" %}'>
+		</form>
+
+	{% endif %}
+
+</div>
+
+</div><!-- b-wrapper -->
+
+{%endblock%}
