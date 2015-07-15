@@ -1,7 +1,16 @@
-'apps.contacts.context_processors.offices',
+# Django-Contact
+A simple contact form.
 
-<link rel="stylesheet"  href="/static/contacts/css/contact.css">
+# About
+Simple contact form app.
 
-'apps.contacts',
+# Install
+* Add to INSTALLED_APPS 'apps.contacts',
+* Add to urls.py url(r'^contacts/', include('apps.contacts.urls')),
+* manage.py syncdb
+* manage.py collectstatic
+* Add this line to you head block
 
-url(r'^contacts/', include('apps.contacts.urls')),
+```html
+<link rel='stylesheet' href='/static/css/contacts.css' type='text/css'>
+```
