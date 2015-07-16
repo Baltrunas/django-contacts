@@ -2,15 +2,17 @@ from django.shortcuts import render
 
 from django.utils.translation import ugettext as _
 
-from django.core.mail import get_connection, send_mail
+from django.core.mail import get_connection
+
+from apps.useful.easy_email import mail
 
 from .forms import MessageForm
-
 from .models import Office
 
 
 def contacts(request):
 	context = {}
+
 	context['title'] = _('Contacts')
 	host = request.META.get('HTTP_HOST')
 	context['offices'] = Office.objects.filter(public=True, sites__domain__in=[host])
@@ -32,14 +34,9 @@ def contacts(request):
 			connection.ssl_keyfile = message.subject.email_ssl_keyfile
 			connection.ssl_certfile = message.subject.email_ssl_certfile
 
-			msg = 'From: %s\nE-Mail: %s\nPhone: %s\nSubject: %s\n\n %s' % (
-				message.name,
-				message.email,
-				message.phone,
-				message.subject,
-				message.message
-			)
-			send_mail(message.subject.subject, msg, send_from, [message.subject.email], connection=connection)
+			context['message'] = message
+
+			mail(message.subject.subject, context, 'contacts/e-mail/message', send_from, [message.subject.email], connection=connection)
 		except:
 			pass
 		context['ok'] = True

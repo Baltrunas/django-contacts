@@ -117,7 +117,7 @@
 	border: 1px solid #f3f3f3;
 	width: 300px;
 	color: #515151;
-	padding-left: 5px;
+	padding: 5px;
 	border: 1px solid #ccc;
 	box-sizing: border-box;
 	appearance: none;
@@ -131,9 +131,10 @@
 
 .b-field__element textarea {
 	width:  300px;
+	box-sizing: border-box;
 	height: 150px;
 	resize: none;
-	border: 1px solid #f3f3f3;
+	border: 1px solid #ccc;
 	background: #f7f7f7;
 	padding: 5px 0 0 5px;
 	color: #515151;
@@ -141,4 +142,8 @@
 
 .b-field__element textarea:focus {
 	outline: none;
+}
+
+.b-error {
+	color: red;
 }

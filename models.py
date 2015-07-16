@@ -31,7 +31,7 @@ class Subject(models.Model):
 
 class Message(models.Model):
 	name = models.CharField(verbose_name=_('Name'), max_length=100)
-	email = models.EmailField(verbose_name=_('Email'), max_length=50)
+	email = models.EmailField(verbose_name=_('E-Mail'), max_length=50)
 	phone = models.CharField(verbose_name=_('Phone'), max_length=32)
 	subject = models.ForeignKey(Subject, related_name='messages', verbose_name=_('Subject'))
 	message = models.TextField(verbose_name=_('Message'), blank=True)
@@ -51,7 +51,7 @@ class Office(models.Model):
 	description = models.TextField(verbose_name=_('Description'), blank=True, null=True)
 
 	phone = models.CharField(verbose_name=_('Phone'), max_length=256, default='+7 (000) 000-00-00', blank=True, null=True)
-	email = models.CharField(verbose_name=_('E-mail'), max_length=128, default='email@mail.com', blank=True, null=True)
+	email = models.CharField(verbose_name=_('E-Mail'), max_length=128, default='email@mail.com', blank=True, null=True)
 	address = models.CharField(verbose_name=_('Address'), max_length=2048, blank=True)
 
 	www = models.URLField(verbose_name=_('WWW'), max_length=64, default='http://glav.it/', blank=True, null=True)
@@ -64,7 +64,7 @@ class Office(models.Model):
 	center_latitude = models.DecimalField(verbose_name=_('Center latitude'), max_digits=10, decimal_places=6, null=True, blank=True)
 	zoom = models.PositiveSmallIntegerField(verbose_name=_('Zoom'), null=True, blank=True, default=15)
 
-	order = models.PositiveSmallIntegerField(verbose_name=_('Order'), default=500)
+	order = models.PositiveSmallIntegerField(verbose_name=_('Sort order'), default=500)
 	main = models.BooleanField(verbose_name=_('Main'), default=True)
 
 	public = models.BooleanField(verbose_name=_('Public'), default=True)

@@ -1,0 +1,9 @@
+{% load i18n %}
+{% load object_dict %}
+{% trans "New message" %}: «{{ message.subject }}»
+
+--- ✄ -----------------------
+{% for field in message|object_dict %}
+{{ field.verbose_name }}: {{ field.display }}
+{% endfor %}
+--- ✄ -----------------------

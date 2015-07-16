@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-28 06:46+0000\n"
+"POT-Creation-Date: 2015-07-16 21:08+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,150 +19,171 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: models.py:7 models.py:19 models.py:30
+#: models.py:9 models.py:25 models.py:36
 msgid "Subject"
 msgstr "Тема"
 
-#: models.py:8
+#: models.py:10
 msgid "E-Mail"
 msgstr "E-Mail"
 
-#: models.py:9 models.py:29 models.py:46
+#: models.py:11 models.py:35 models.py:53
 msgid "Phone"
 msgstr "Телефон"
 
-#: models.py:10
+#: models.py:12
 msgid "From name"
 msgstr "От имени"
 
-#: models.py:11
+#: models.py:13
 msgid "From E-Mail"
 msgstr "От E-Mail"
 
-#: models.py:12
+#: models.py:14
 msgid "EMAIL HOST"
 msgstr ""
 
-#: models.py:13
+#: models.py:15
 msgid "EMAIL HOST USER"
 msgstr ""
 
-#: models.py:14
+#: models.py:16
 msgid "EMAIL HOST PASSWORD"
 msgstr ""
 
-#: models.py:15
+#: models.py:17
 msgid "EMAIL_PORT"
 msgstr ""
 
-#: models.py:16
+#: models.py:18
 msgid "EMAIL_USE_TLS"
 msgstr ""
 
-#: models.py:20
-msgid "Subjects"
-msgstr "Тематика"
+#: models.py:19
+msgid "EMAIL_USE_SSL"
+msgstr ""
 
-#: models.py:27 models.py:43
+#: models.py:20
+msgid "EMAIL_TIMEOUT"
+msgstr ""
+
+#: models.py:21
+msgid "EMAIL_SSL_KEYFILE"
+msgstr ""
+
+#: models.py:22
+msgid "EMAIL_SSL_CERTFILE"
+msgstr ""
+
+#: models.py:26
+msgid "Subjects"
+msgstr "Темы"
+
+#: models.py:33 models.py:50
 msgid "Name"
 msgstr "Имя"
 
-#: models.py:31 models.py:35
+#: models.py:37 models.py:42
 msgid "Message"
 msgstr "Сообщение"
 
-#: models.py:32 models.py:66
+#: models.py:38 models.py:71
 msgid "Created At"
-msgstr "Создать"
+msgstr "Создано"
 
-#: models.py:36
+#: models.py:39
+msgid "IP"
+msgstr ""
+
+#: models.py:43
 msgid "Messages"
 msgstr "Сообщения"
 
-#: models.py:44
+#: models.py:51
 msgid "Description"
 msgstr "Описание"
 
-#: models.py:47
-msgid "E-mail"
-msgstr "E-mail"
-
-#: models.py:48
+#: models.py:55
 msgid "Address"
 msgstr "Адрес"
 
-#: models.py:50
+#: models.py:57
 msgid "WWW"
 msgstr "WWW"
 
-#: models.py:52
+#: models.py:58
 msgid "Photo"
 msgstr "Фото"
 
-#: models.py:54
+#: models.py:59
 msgid "Sites"
 msgstr "Сайты"
 
-#: models.py:56
+#: models.py:61
 msgid "Latitude"
 msgstr "Широта"
 
-#: models.py:57
+#: models.py:62
 msgid "Longitude"
 msgstr "Долгота"
 
-#: models.py:58
+#: models.py:63
 msgid "Center longitude"
 msgstr "Центр долготы"
 
-#: models.py:59
+#: models.py:64
 msgid "Center latitude"
 msgstr "Центр широты"
 
-#: models.py:60
+#: models.py:65
 msgid "Zoom"
 msgstr "Увеличение"
 
-#: models.py:62
-msgid "Order"
-msgstr "Порядок"
+#: models.py:67
+msgid "Sort order"
+msgstr "Порядок сортировки"
 
-#: models.py:63
+#: models.py:68
 msgid "Main"
-msgstr "Главная"
+msgstr "Главный"
 
-#: models.py:65
+#: models.py:70
 msgid "Public"
 msgstr "Публиковать"
 
-#: models.py:67
+#: models.py:72
 msgid "Updated At"
 msgstr "Обновлено"
 
-#: models.py:88 templates/contacts/page.html:46
+#: models.py:94
 msgid "Office"
 msgstr "Офис"
 
-#: models.py:89
+#: models.py:95
 msgid "Offices"
 msgstr "Офисы"
 
-#: templates/contacts/contacts.html:64
-msgid "Our contacts"
-msgstr "Наши контакты"
+#: templates/contacts/e-mail/message.html:8
+#: templates/contacts/e-mail/message.txt:3
+msgid "New message"
+msgstr "Новое сообщение"
 
-#: templates/contacts/page.html:89
+#: templates/contacts/page.html:48 views.py:16
+msgid "Contacts"
+msgstr "Контакты"
+
+#: templates/contacts/page.html:91
 msgid "We received your message!"
 msgstr "Мы получили ваше сообщение!"
 
 #: templates/contacts/page.html:92
+msgid "We will contact you shortly!"
+msgstr "Мы свяжемся с Вами в скором времени!"
+
+#: templates/contacts/page.html:94
 msgid "Send a message!"
 msgstr "Отправить сообщение!"
 
-#: templates/contacts/page.html:93
-msgid "Try again"
-msgstr "Попробуйте еще раз!"
-
-#: views.py:18
-msgid "Contacts"
-msgstr "Наши контакты"
+#: templates/contacts/page.html:121
+msgid "Submit"
+msgstr "Отправить"

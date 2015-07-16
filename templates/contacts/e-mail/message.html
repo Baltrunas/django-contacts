@@ -1,0 +1,19 @@
+{% extends "e-mail/base.html" %}
+
+{% load i18n %}
+{% load object_dict %}
+
+{% block content %}
+
+<h1>{% trans "New message" %}: «{{ message.subject }}»</h1>
+
+<table class='b-table'>
+	{% for field in message|object_dict %}
+		<tr class='b-table__row'>
+			<td class="b-table__name">{{ field.verbose_name }}</td>
+			<td class="b-table__value">{{ field.display }}</td>
+		</tr><!-- b-table -->
+	{% endfor %}
+</table>
+
+{% endblock content %}
