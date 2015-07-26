@@ -7,6 +7,7 @@ Simple contact form app.
 # Install
 * Add to INSTALLED_APPS 'apps.contacts',
 * Add to urls.py url(r'^contacts/', include('apps.contacts.urls')),
+* Add to CONTEXT_PROCESSORS 'apps.contacts.context_processors.offices',
 * manage.py syncdb
 * manage.py collectstatic
 * Add this line to you head block
