@@ -4,7 +4,7 @@ from django.utils.translation import ugettext as _
 
 from django.core.mail import get_connection
 
-from apps.useful.easy_email import mail
+from helpful.easy_email import mail
 
 from .forms import MessageForm
 from .models import Office
