@@ -36,7 +36,7 @@ class Message(models.Model):
 	subject = models.ForeignKey(Subject, related_name='messages', verbose_name=_('Subject'))
 	message = models.TextField(verbose_name=_('Message'), blank=True)
 	created_at = models.DateTimeField(verbose_name=_('Created At'), auto_now_add=True)
-	ip = models.IPAddressField(verbose_name=_('IP'), blank=True, null=True, editable=False)
+	ip = models.GenericIPAddressField(verbose_name=_('IP'), blank=True, null=True, editable=False)
 
 	class Meta:
 		verbose_name = _('Message')
