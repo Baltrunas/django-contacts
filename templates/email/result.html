@@ -1,0 +1,25 @@
+{% extends "email/base.html" %}
+{% load object_dict %}
+{% load i18n %}
+
+{% block content %}
+<table cellspacing="0" style='width: 100%'>
+	<thead>
+		<tr>
+			<td colspan="2">
+				<h1 style='font-size: 25px; font-weight: normal; margin: 5px 0 15px;'>{{ title }}</h1>
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		{% for field in object|object_dict %}
+		{% if field.field.name != 'id' and field.field.name != 'user' and field.field.name != 'status' %}
+			<tr>
+				<td style='border-bottom: 2px solid #eee; width: 60%; padding: 5px 5px 0; color: #444; font-size: 17px;'>{{ field.verbose_name }}:</td>
+				<td style='border-bottom: 2px solid #eee; width: 40%; padding: 5px 5px 0; text-align: right; color: #000; font-weight: bold;'>{{ field.display }}</td>
+			</tr>
+		{% endif %}
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock content %}
