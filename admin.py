@@ -1,9 +1,12 @@
 from django.contrib import admin
 
 from .models import Subject
-from .models import Message
 from .models import Office
 
+from .models import OfficeFeature
+from .models import FormConfig
+from .models import FormField
+from .models import FormLog
 
 class SubjectAdmin(admin.ModelAdmin):
 	list_display = ['subject', 'email', 'phone', 'from_name', 'from_email']
@@ -13,12 +16,26 @@ class SubjectAdmin(admin.ModelAdmin):
 admin.site.register(Subject, SubjectAdmin)
 
 
-class MessageAdmin(admin.ModelAdmin):
-	list_display = ['name', 'email', 'phone', 'subject', 'message', 'ip', 'created_at']
-	search_fields = ['name', 'email', 'phone', 'subject', 'message', 'ip', 'created_at']
-	ordering = ['name']
 
-admin.site.register(Message, MessageAdmin)
+class FormFieldInline(admin.StackedInline):
+	model = FormField
+	extra = 3
+
+
+class FormConfigAdmin(admin.ModelAdmin):
+	list_display = ['title', 'created_at']
+	search_fields = ['title', 'created_at']
+	ordering = ['title']
+
+	inlines = [FormFieldInline]
+
+admin.site.register(FormConfig, FormConfigAdmin)
+
+
+class OfficeFeatureInline(admin.TabularInline):
+	model = OfficeFeature
+	extra = 3
+
 
 
 class OfficeAdmin(admin.ModelAdmin):
@@ -26,5 +43,8 @@ class OfficeAdmin(admin.ModelAdmin):
 	search_fields = ['name', 'description', 'phone', 'email', 'address', 'www']
 	list_filter = ['public', 'main', 'sites']
 	ordering = ['name']
+	inlines = [OfficeFeatureInline]
 
 admin.site.register(Office, OfficeAdmin)
+
+admin.site.register(FormLog)

@@ -15,3 +15,7 @@ Simple contact form app.
 ```html
 <link rel='stylesheet' href='/static/css/contacts.css' type='text/css'>
 ```
+
+# ToDo
+* Add Ajax check
+https://github.com/stephenmcd/django-forms-builder/
