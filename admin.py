@@ -1,8 +1,10 @@
 from django.contrib import admin
 
 from .models import Subject
-from .models import Message
 from .models import Office
+from .models import FormConfig
+from .models import FormField
+from .models import FormLog
 
 
 class SubjectAdmin(admin.ModelAdmin):
@@ -13,14 +15,6 @@ class SubjectAdmin(admin.ModelAdmin):
 admin.site.register(Subject, SubjectAdmin)
 
 
-class MessageAdmin(admin.ModelAdmin):
-	list_display = ['name', 'email', 'phone', 'subject', 'message', 'ip', 'created_at']
-	search_fields = ['name', 'email', 'phone', 'subject', 'message', 'ip', 'created_at']
-	ordering = ['name']
-
-admin.site.register(Message, MessageAdmin)
-
-
 class OfficeAdmin(admin.ModelAdmin):
 	list_display = ['name', 'phone', 'email', 'address', 'www']
 	search_fields = ['name', 'description', 'phone', 'email', 'address', 'www']
@@ -28,3 +22,18 @@ class OfficeAdmin(admin.ModelAdmin):
 	ordering = ['name']
 
 admin.site.register(Office, OfficeAdmin)
+
+
+class FormFieldInline(admin.StackedInline):
+	model = FormField
+	extra = 1
+	fields = ['label', 'help_text', 'name', 'field_type', 'required', 'choices', 'default', 'placeholder', 'order']
+
+class FormConfigAdmin(admin.ModelAdmin):
+	list_display = ['title']
+	ordering = ['title']
+	inlines = [FormFieldInline]
+
+admin.site.register(FormConfig, FormConfigAdmin)
+
+admin.site.register(FormLog)

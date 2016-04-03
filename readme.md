@@ -15,3 +15,6 @@ Simple contact form app.
 ```html
 <link rel='stylesheet' href='/static/css/contacts.css' type='text/css'>
 ```
+
+# ToDo
+* Ajax form check and save

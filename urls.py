@@ -4,5 +4,6 @@ from . import views
 
 
 urlpatterns = [
-	url(r'^$', views.contacts, name='contacts'),
+	# url(r'^check_form/(?P<slug>[-_\w]+)/$', views.check_form, name='check_form'),
+	# url(r'^$', views.contacts, name='contacts'),
 ]
