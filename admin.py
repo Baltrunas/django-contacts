@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import ugettext_lazy as _
 
 from .models import Subject
 from .models import Office
@@ -42,6 +43,24 @@ class OfficeAdmin(admin.ModelAdmin):
 	search_fields = ['name', 'description', 'phone', 'email', 'address', 'www']
 	list_filter = ['public', 'main', 'sites']
 	ordering = ['name']
+
+	fieldsets = (
+		(_('Info'), {
+			'fields': ('name', 'description', 'phone', 'email', 'www', 'photo'),
+		}),
+		(_('Address'), {
+			'classes': ('collapse',),
+			'fields': ('address_country', 'address_locality', 'address_region', 'address_box', 'address_postal', 'address_street'),
+		}),
+		(_('Map'), {
+			'classes': ('collapse',),
+			'fields': ('latitude', 'longitude', 'center_latitude', 'center_longitude', 'zoom'),
+		}),
+		(_('Settings'), {
+			'fields': ('sites', 'order', 'main', 'public')
+		}),
+	)
+
 	inlines = [OfficeFeatureInline]
 
 admin.site.register(Office, OfficeAdmin)

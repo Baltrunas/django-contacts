@@ -13,11 +13,15 @@ class Office(models.Model):
 
 	phone = models.CharField(verbose_name=_('Phone'), max_length=256, default='+7 (000) 000-00-00', blank=True, null=True)
 	email = models.CharField(verbose_name=_('E-Mail'), max_length=128, default='email@mail.com', blank=True, null=True)
-	address = models.CharField(verbose_name=_('Address'), max_length=2048, blank=True)
-
 	www = models.URLField(verbose_name=_('WWW'), max_length=64, default='http://glav.it/', blank=True, null=True)
 	photo = models.ImageField(verbose_name=_('Photo'), upload_to='img/office', blank=True)
-	sites = models.ManyToManyField(Site, related_name='offices', verbose_name=_('Sites'))
+
+	address_country = models.CharField(_('Country'), max_length=256, blank=True)
+	address_locality = models.CharField(_('Locality'), help_text=_('Mountain View'), max_length=256, blank=True)
+	address_region = models.CharField(_('Region'), help_text=_('CA'), max_length=256, blank=True)
+	address_box = models.CharField(_('Post office box number'), help_text=_('The post office box number for PO box addresses'), max_length=256, blank=True)
+	address_postal = models.CharField(_('Postal code'), max_length=256, blank=True)
+	address_street = models.CharField(_('Street address'), help_text=_('T1600 Amphitheatre Pkwy'), max_length=256, blank=True)
 
 	latitude = models.DecimalField(verbose_name=_('Latitude'), max_digits=19, decimal_places=15, blank=True, null=True)
 	longitude = models.DecimalField(verbose_name=_('Longitude'), max_digits=19, decimal_places=15, blank=True, null=True)
@@ -25,12 +29,16 @@ class Office(models.Model):
 	center_longitude = models.DecimalField(verbose_name=_('Center longitude'), max_digits=19, decimal_places=15, null=True, blank=True)
 	zoom = models.PositiveSmallIntegerField(verbose_name=_('Zoom'), null=True, blank=True, default=15)
 
+	sites = models.ManyToManyField(Site, related_name='offices', verbose_name=_('Sites'))
 	order = models.PositiveSmallIntegerField(verbose_name=_('Sort order'), default=500)
 	main = models.BooleanField(verbose_name=_('Main'), default=True)
 
 	public = models.BooleanField(verbose_name=_('Public'), default=True)
 	created_at = models.DateTimeField(verbose_name=_('Created At'), auto_now_add=True)
 	updated_at = models.DateTimeField(verbose_name=_('Updated At'), auto_now=True)
+
+	def address(self):
+		return '%s, %s' % (self.address_region, self.address_street)
 
 	def get_latitude(self):
 		return '%s' % self.latitude
