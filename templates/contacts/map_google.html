@@ -1,3 +1,87 @@
-<pre>
-make it ;-)
-</pre>
+<h2>Google</h2>
+<script src='//maps.googleapis.com/maps/api/js?sensor=false' type="text/javascript"></script>
+
+
+{% if offices.count > 1 %}
+	<ul class="b-offices-list">
+		{% for office in offices %}
+			<li class='b-offices-list-item'
+				data-zoom='{{ office.zoom }}'
+				data-center='[{{ office.get_center_latitude }}, {{ office.get_center_longitude }}]'
+				data-phone='{{ office.phone }}'
+				data-email='{{ office.email }}'
+				data-address='{{ office.address }}'
+			>
+				{{ office.name }}
+			</li>
+		{% endfor %}
+	</ul>
+{% endif %}
+
+{% for office in offices %}
+	<div class='b-contacts-info' itemscope itemtype="http://schema.org/Organization">
+		<span itemprop='name' class="b-office_name">{{ office }}</span>
+		<span itemprop='url'>{{ office.url }}</span>
+
+		<div itemprop="location" itemscope itemtype="https://schema.org/Place">
+			<div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+				<meta itemprop="latitude" content="{{ office.get_latitude }}">
+				<meta itemprop="longitude" content="{{ office.get_longitude }}">
+			</div>
+		</div>
+		{% if office.address %}
+			<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+				<span class='m-address' itemprop="streetAddress" id="office_{{ office.id }}">{{ office.address }}</span>
+			</span>
+		{% endif %}
+		<span class='m-phone' itemprop="telephone">{{ office.phone|safe }}</span>
+		{% if office.skype %}
+			<span class='m-skype'>{{ office.skype }}</span>
+		{% endif %}
+		{% if office.email %}
+			<span class='m-email' itemprop='email'>{{ office.email }}</span>
+		{% endif %}
+	</div>
+{% endfor %}
+
+<div id='map' style='width:100%; height:450px'></div>
+
+<script type="text/javascript">
+	var offices = [];
+
+	function initialize() {
+		var mapOptions = {
+			zoom: {{ offices.0.zoom }},
+			center: new google.maps.LatLng({{ offices.0.get_latitude }}, {{ offices.0.get_longitude }}),
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			zoomControl: true,
+			scrollwheel: false,
+			zoomControlOptions: {
+				position: google.maps.ControlPosition.LEFT_CENTER
+			},
+		}
+		var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+		setMarkers(map, offices);
+	}
+
+	function setMarkers(map, locations) {
+		for (var i = 0; i < locations.length; i++) {
+			var office = locations[i];
+			var myLatLng = new google.maps.LatLng(office[1], office[2]);
+			var marker = new google.maps.Marker({
+				position: myLatLng,
+				map: map,
+				clickable: true,
+				title: office[0],
+				zIndex: 1000
+			});
+		}
+	}
+
+	{% for office in offices %}
+		offices.push(['{{ office.name }}', {{ office.get_center_latitude }}, {{ office.get_center_longitude }}]);
+			// , 1, '{{ office.address }}'
+	{% endfor %}
+
+	initialize();
+</script>
