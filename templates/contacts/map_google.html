@@ -1,6 +1,4 @@
-<h2>Google</h2>
 <script src='//maps.googleapis.com/maps/api/js?sensor=false' type="text/javascript"></script>
-
 
 {% if offices.count > 1 %}
 	<ul class="b-offices-list">
@@ -19,32 +17,57 @@
 {% endif %}
 
 {% for office in offices %}
-	<div class='b-contacts-info' itemscope itemtype="http://schema.org/Organization">
-		<span itemprop='name' class="b-office_name">{{ office }}</span>
-		<span itemprop='url'>{{ office.url }}</span>
-
-		<div itemprop="location" itemscope itemtype="https://schema.org/Place">
-			<div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
-				<meta itemprop="latitude" content="{{ office.get_latitude }}">
-				<meta itemprop="longitude" content="{{ office.get_longitude }}">
-			</div>
-		</div>
-		{% if office.address %}
-			<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-				<span class='m-address' itemprop="streetAddress" id="office_{{ office.id }}">{{ office.address }}</span>
-			</span>
+	<div itemscope itemtype="http://schema.org/LocalBusiness" class='b-office-info'>
+		<a itemprop="url" href="{{ office.url }}" class='b-office-info__name'>
+			<strong itemprop="name">{{ office }}</strong>
+		</a>
+		{% if office.description %}
+			<div itemprop="description" class='b-office-info__desc'>{{ office.description }}</div>
 		{% endif %}
-		<span class='m-phone' itemprop="telephone">{{ office.phone|safe }}</span>
-		{% if office.skype %}
-			<span class='m-skype'>{{ office.skype }}</span>
+
+		<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress" class="b-office-info__adress__list">
+			{% if office.address_country %}
+				<span itemprop="addressCountry">{{ office.address_country }}</span>
+			{% endif %}
+			{% if office.address_locality %}
+				<span itemprop="addressLocality" class='addressLocality'>{{ office.address_locality }}</span>
+			{% endif %}
+			{% if office.address_region %}
+				<span itemprop="addressRegion">{{ office.address_region }}</span>
+			{% endif %}
+			{% if office.address_box %}
+				<span itemprop="postOfficeBoxNumber">{{ office.address_box }}</span>
+			{% endif %}
+			{% if office.address_postal %}
+				<span itemprop="postalCode">{{ office.address_postal }}</span>
+			{% endif %}
+			{% if office.address_street %}
+				<span itemprop="streetAddress" class='m-streetadress'>{{ office.address_street }}</span>
+			{% endif %}
+		</span>
+
+		{% if office.phone %}
+			<span class='m-phone' itemprop="telephone" class='b-office-info__phone'>{{ office.phone|safe }}</span>
 		{% endif %}
 		{% if office.email %}
-			<span class='m-email' itemprop='email'>{{ office.email }}</span>
+			<span class='m-email' itemprop='email' class='b-office-info__email'>{{ office.email }}</span>
+		{% endif %}
+		{% if office.latitude and office.longitude %}
+			<div itemprop='location' itemscope itemtype='https://schema.org/Place'>
+				<div itemprop='geo' itemscope itemtype='http://schema.org/GeoCoordinates'>
+					<meta itemprop='latitude' content='{{ office.get_latitude }}'>
+					<meta itemprop='longitude' content='{{ office.get_longitude }}'>
+				</div>
+			</div>
+		{% endif %}
+		<meta itemprop='logo' content='/templates/img/logo.png'>
+		{% if office.photo %}
+			<meta itemprop='image' content='{{ office.photo.url }}'>
 		{% endif %}
 	</div>
 {% endfor %}
 
-<div id='map' style='width:100%; height:450px'></div>
+<div id='map' class='b-contact-map'></div>
 
 <script type="text/javascript">
 	var offices = [];
