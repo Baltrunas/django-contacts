@@ -1,6 +1,6 @@
 $(function() {
 
-	$(document).on('click', '.b-form__submit', function(e) {
+	$('.b-form .b-form__submit').on('click', function(e) {
 		$this = $(this);
 		var disabled = $this.attr('disabled');
 
@@ -12,6 +12,7 @@ $(function() {
 
 			$.post(url, form_date).done(function(data) {
 				console.log(data);
+
 				if (data.send) {
 					$(form).hide();
 					$(form).next('.b-form__tnx_message').show();
@@ -24,7 +25,6 @@ $(function() {
 							.find('.b-field__errors');
 
 						errors_list.empty();
-
 
 						for (var error in data.errors[field]) {
 							error_text = data.errors[field][error];

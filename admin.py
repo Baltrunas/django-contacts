@@ -37,7 +37,6 @@ class OfficeFeatureInline(admin.TabularInline):
 	extra = 3
 
 
-
 class OfficeAdmin(admin.ModelAdmin):
 	list_display = ['name', 'phone', 'email', 'address', 'www']
 	search_fields = ['name', 'description', 'phone', 'email', 'address', 'www']
@@ -47,4 +46,10 @@ class OfficeAdmin(admin.ModelAdmin):
 
 admin.site.register(Office, OfficeAdmin)
 
-admin.site.register(FormLog)
+
+class FormLogAdmin(admin.ModelAdmin):
+	list_display = ['form_config', 'referrer', 'created_at']
+	search_fields = ['form_config', 'referrer', 'created_at']
+	list_filter = ['form_config', 'referrer']
+
+admin.site.register(FormLog, FormLogAdmin)

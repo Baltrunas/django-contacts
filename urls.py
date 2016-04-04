@@ -4,5 +4,5 @@ from . import views
 
 
 urlpatterns = [
-	# url(r'^$', views.contacts, name='contacts'),
+	url(r'^(?P<slug>[-_\w]+)/$', views.ajax, name='contacts_ajax'),
 ]

@@ -1,10 +1,7 @@
-{% load i18n %}
 
-<!-- &lang=ru-RU -->
-<script src='//api-maps.yandex.ru/2.1/?load=package.standard'></script>
+<script src='//api-maps.yandex.ru/2.1/?load=package.standard&lang=ru-RU'></script>
 
 <script type='text/javascript'>
-
 	ymaps.ready(init);
 
 	function init () {
@@ -37,6 +34,11 @@
 		$('.b-office').on('click', function() {
 			myMap.setZoom($(this).data('zoom'));
 			myMap.setCenter($(this).data('center'));
+
+			// $('.b-contacts-info .b-phone').text($(this).data('phone'))
+			// $('.b-contacts-info .m-email').text($(this).data('email'))
+			// $('.b-contacts-info .m-address').text($(this).data('address'))
+
 		});
 
 	}
@@ -82,104 +84,29 @@
 
 <div class='b-contact-map' id='contacts-map'></div>
 
-
-
-
-
 {% comment %}
-<!-- this for use as block in django-lp -->
 
-<div class="b-contacts">
+<div class='b-contacts-info' itemscope itemtype="http://schema.org/Organization">
+	<h3>Наши контакты</h3>
+	<span itemprop='name'>{{ offices.0 }}</span>
+	<span itemprop='url'>https://express-page.kg/</span>
 
-<script src='//api-maps.yandex.ru/2.1/?load=package.standard&lang=ru-RU'></script>
-{% if offices.count > 1 %}
-<div class="b-wrapper">
-	<ul class="b-offices-list">
-		{% for office in offices %}
-			<li class='b-offices-list-item'
-				data-zoom='{{ office.zoom }}'
-				data-center='[{{ office.get_center_latitude }}, {{ office.get_center_longitude }}]'
-				data-phone='{{ office.phone }}'
-				data-email='{{ office.email }}'
-				data-address='{{ office.address }}'
-			>
-				{{ office.name }}
-			</li>
-		{% endfor %}
-	</ul>
-</div>
-{% endif %}
-
-
-
-<script type='text/javascript'>
-
-ymaps.ready(init);
-
-function init () {
-	var myMap = new ymaps.Map('contacts-map', {
-		center: [{{ offices.0.get_center_latitude }}, {{ offices.0.get_center_longitude }}],
-		zoom: {{ offices.0.zoom }}
-	}),
-
-	{% for office in offices %}
-	office_{{ office.id }} = new ymaps.Placemark(
-		[{{ office.get_latitude }}, {{ office.get_longitude }}],
-		{
-			balloonContentHeader: '{{ office.name }}',
-			balloonContentBody: '{{ office.description }}',
-			balloonContentFooter: '{{ office.address }}',
-			hintContent: '{{ office.name }}'
-		},
-		{
-			preset: 'twirl#darkgreenDotIcon',
-		}
-	);
-	myMap.geoObjects.add(office_{{ office.id }});
-	{% endfor %}
-
-	$('.b-offices-list-item').on('click', function() {
-		myMap.setZoom($(this).data('zoom'));
-		myMap.setCenter($(this).data('center'));
-
-		$('.b-contacts-info .b-phone').text($(this).data('phone'))
-		$('.b-contacts-info .m-email').text($(this).data('email'))
-		$('.b-contacts-info .m-address').text($(this).data('address'))
-	});
-}
-
-</script>
-
-	<div id='contacts-map' style='width:100%; height:450px'></div>
-	<div class='b-wrapper'>
-		<div class='b-contacts-info' itemscope itemtype="http://schema.org/Organization">
-			<h3>Наши контакты</h3>
-			<span itemprop='name'>{{ offices.0 }}</span>
-			<span itemprop='url'>https://express-page.kg/</span>
-
-			<div itemprop="location" itemscope itemtype="https://schema.org/Place">
-				<div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
-					<meta itemprop="latitude" content="{{ offices.0.get_latitude }}">
-					<meta itemprop="longitude" content="{{ offices.0.get_longitude }}">
-				</div>
-			</div>
-
-
-			<span class='m-phone' itemprop="telephone">{{ offices.0.phone|safe }}</span><br>
-			{% if offices.0.skype %}
-				<span class='m-skype'>{{ offices.0.skype }}</span><br>
-			{% endif %}
-			{% if offices.0.email %}
-				<span class='m-email' itemprop='email'>{{ offices.0.email }}</span><br>
-			{% endif %}
-			{% if offices.0.address %}
-				<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-					<span class='m-address' itemprop="streetAddress">{{ offices.0.address }}</span>
-				</span>
-			{% endif %}
+	<div itemprop="location" itemscope itemtype="https://schema.org/Place">
+		<div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+			<meta itemprop="latitude" content="{{ offices.0.get_latitude }}">
+			<meta itemprop="longitude" content="{{ offices.0.get_longitude }}">
 		</div>
 	</div>
 
-</div><!-- b-contacts -->
 
+	<span class='m-phone' itemprop="telephone">{{ offices.0.phone|safe }}</span><br>
+	{% if offices.0.email %}
+		<span class='m-email' itemprop='email'>{{ offices.0.email }}</span><br>
+	{% endif %}
+	{% if offices.0.address %}
+		<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+			<span class='m-address' itemprop="streetAddress">{{ offices.0.address }}</span>
+		</span>
+	{% endif %}
+</div>
 {% endcomment %}

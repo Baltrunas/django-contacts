@@ -8,7 +8,8 @@ Simple contact form app.
 * Add to INSTALLED_APPS 'apps.contacts',
 * Add to urls.py url(r'^contacts/', include('apps.contacts.urls')),
 * Add to CONTEXT_PROCESSORS 'apps.contacts.context_processors.offices',
-* manage.py syncdb
+* manage.py migrare contacts
+
 * manage.py collectstatic
 * Add this line to you head block
 
@@ -17,5 +18,8 @@ Simple contact form app.
 ```
 
 # ToDo
-* Add Ajax check
-https://github.com/stephenmcd/django-forms-builder/
+* Add AJAX check views
+* Notifer
+
+* Check translations.py on firet multilanguage site
+* https://github.com/stephenmcd/django-forms-builder/

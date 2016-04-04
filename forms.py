@@ -32,7 +32,7 @@ class FormConfigForm(Form):
 			# 	if (field.field_type == fields.SELECT and
 			# 			field.default not in [c[0] for c in choices]):
 			# 		choices.insert(0, ("", field.placeholder_text))
-				field_args["choices"] = choices
+				field_args['choices'] = choices
 
 			if field_widget is not None:
 				field_args['widget'] = field_widget

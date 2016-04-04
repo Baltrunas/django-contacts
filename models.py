@@ -76,14 +76,12 @@ class OfficeFeature(models.Model):
 		verbose_name_plural = _('Office features')
 
 
-
-
 class FormConfig(models.Model):
 	title = models.CharField(_('Title'), max_length=128)
 	slug = models.SlugField(_('Slug'), max_length=128, unique=True)
 	submit_name = models.CharField(_('Submit bottom name'), max_length=128)
 
-# 	error_message = models.TextField(_('Error Message'), blank=True, null=True)
+	# error_message = models.TextField(_('Error Message'), blank=True, null=True)
 	success_message = models.TextField(_('Success message'), blank=True)
 
 	public = models.BooleanField(_('Public'), default=True)
