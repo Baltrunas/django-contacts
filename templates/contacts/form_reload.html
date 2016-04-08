@@ -2,11 +2,11 @@
 
 <div class='b-form m-form_reload'>
 	{# {% if form_config.show_title %}{% endif %} #}
-	<h3 class='b-form__title'>{{ form_config.title }}</h3>
 
 	{% if form_config.send %}
 		<div class='b-form__success_message'>{{ form_config.success_message|safe }}</div>
 	{% else %}
+		<h3 class='b-form__title'>{{ form_config.title }}</h3>
 
 		<form method='post' action=''>
 			{# {{ form_config.get_absolute_url }} #}
