@@ -1,3 +1,4 @@
+import json
 from django.db import models
 
 from django.utils.translation import ugettext_lazy as _
@@ -150,6 +151,9 @@ class FormLog(models.Model):
 
 	def __unicode__(self):
 		return 'Request #%s from %s' % (self.pk, self.created_at)
+
+	def get_data(self):
+		return json.loads(self.data)
 
 	class Meta:
 		ordering = ['-created_at']
