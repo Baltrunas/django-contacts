@@ -6,7 +6,7 @@ from django.utils.translation import ugettext as _
 # from django.core.mail import get_connection
 
 from .models import FormConfig, FormLog
-from .forms import FormLog
+# from .forms import FormLog
 
 from helpful.easy_email import mail
 
