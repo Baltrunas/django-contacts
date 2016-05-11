@@ -6,7 +6,6 @@
 	{% if form_config.send %}m-form__sended{% endif %}
 	'>
 
-
 	<h3 class='b-form__title'>{{ form_config.title }}</h3>
 
 	<form class='b-form__form' method='post' action='' id='form-{{ form_config.slug }}'>
@@ -24,11 +23,7 @@
 				m-field_{{ field.name }}
 			'>
 				<label class='b-field__label' for='id_{{ field.name }}'>{{ field.label }}:</label>
-				<ul class='b-field__errors'>
-					{% for error in field.errors %}
-						<li class='b-field__errors_error'>{{ error }}</li>
-					{% endfor %}
-				</ul>
+				<ul class='b-field__errors'>{% for error in field.errors %}<li class='b-field__errors_error'>{{ error }}</li>{% endfor %}</ul>
 				<div class='b-field__field'>{{ field }}</div>
 			</div>
 		{% endfor %}
