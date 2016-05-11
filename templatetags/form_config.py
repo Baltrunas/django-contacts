@@ -10,7 +10,7 @@ register = template.Library()
 
 
 @register.simple_tag(takes_context=True)
-def form_config(context, slug, tpl='contacts/form_reload.html'):
+def form_config(context, slug, tpl='contacts/form.html'):
 	form_config = FormConfig.objects.get(slug=slug)
 
 	context['form_config'] = form_config

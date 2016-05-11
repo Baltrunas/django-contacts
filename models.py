@@ -100,9 +100,9 @@ class FormConfig(models.Model):
 	def __unicode__(self):
 		return self.title
 
-	# @models.permalink
-	# def get_absolute_url(self):
-	# 	return ('check_form', (), {'slug': self.slug})
+	@models.permalink
+	def get_absolute_url(self):
+		return ('contacts_ajax', (), {'slug': self.slug})
 
 	class Meta:
 		ordering = ['-created_at']
