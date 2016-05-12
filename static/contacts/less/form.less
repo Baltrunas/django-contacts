@@ -1,5 +1,42 @@
 /* New */
 
+/* Errors */
+
+.b-field__errors {
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	bottom: 0px;
+	width: @full-size;
+	height: 30px;
+	border-radius: 2px;
+	background: red;
+	border: none;
+	color: #fff;
+	text-align: center;
+	line-height: 2.2;
+	font-size: 14px;
+	box-sizing: border-box;
+	-webkit-animation: blink 2s;
+	animation: blink 2s;
+	-moz-animation: blink 2s;
+	-o-animation: blink  2s;
+	opacity: 0;
+	z-index: 0;
+	visibility: hidden;
+}
+
+@-webkit-keyframes blink {
+	0% { opacity: 0; visibility: visible;}
+	50% { opacity: 1; visibility: visible;}
+	100% { opacity: 0; visibility: hidden;}
+}
+@keyframes blink {
+	0% { opacity: 0; visibility: visible;}
+	50% { opacity: 1; visibility: visible;}
+	100% { opacity: 0; visibility: hidden;}
+}
+
 .b-form__form .b-field {
 	width: 300px;
 	margin-bottom: 20px;
@@ -32,7 +69,6 @@
 .b-form__form .b-form__submit {
 	width: 300px;
 	height: 35px;
-	float: right;
 	border-radius: 2px;
 	color: white;
 	background: @blue;
@@ -89,10 +125,11 @@
 }
 
 .b-form__submit:disabled {
-	background: silver url(/static/contacts/img/loading_icon.gif) no-repeat 70px 10px!important;
+	background: silver url(/static/contacts/img/loading_icon.gif) no-repeat center!important;
 	background-size: 16px!important;
 	cursor: wait;
 	color: @dark;
+	text-indent: -9999em;
 }
 
 .b-form__success_message {
