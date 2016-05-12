@@ -33,7 +33,7 @@ $('.b-form .b-form__submit').on('click', function(e) {
 						console.log('text');
 					}
 
-					errors_list.fadeIn(300).fadeOut(2000);
+					// errors_list.fadeIn(300).fadeOut(2000);
 				} // end for data.errors
 			}
 			$this.removeAttr('disabled');

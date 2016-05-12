@@ -1,72 +1,82 @@
-/* New */
+.b-form {
+}
 
-/* Errors */
+.b-form__title {
+}
+
+.b-form__form {
+	display: block;
+}
+
+.b-field {
+	width: @field-size;
+	position: relative;
+	margin-bottom: 20px; // prolject (var)
+	margin-right: 150px; // prolject (var)
+	float: left; // prolject
+}
+
+// project
+.b-field:nth-of-type(3n) {
+	margin-right: 0;
+}
+
+.b-field__label {
+	display: none; // project
+}
+
+.b-field__field input,
+.b-field__field select {
+	width: @full-size;
+	height: 30px; // var
+	border: 1px solid @field-border-color; // var
+	border-radius: 2px;
+	padding-left: 9px;
+	box-sizing: border-box;
+	outline: none;
+	color: @field-color; // base-color field-color?
+}
+
+.b-field__field textarea {
+	width:  @full-size;
+	box-sizing: border-box;
+	height: 150px; // var
+	resize: none; // ?
+	border: 1px solid @field-border-color;
+	background: @field-bg;
+	padding: 5px 0 0 5px;
+	color: @field-color;
+	outline: none;
+}
 
 .b-field__errors {
 	padding: 0;
 	margin: 0;
 	position: absolute;
-	bottom: 0px;
+	bottom: 0;
 	width: @full-size;
 	height: 30px;
 	border-radius: 2px;
-	background: red;
+	background: @error; // ?
 	border: none;
 	color: #fff;
 	text-align: center;
 	line-height: 2.2;
 	font-size: 14px;
 	box-sizing: border-box;
-	-webkit-animation: blink 2s;
 	animation: blink 2s;
-	-moz-animation: blink 2s;
-	-o-animation: blink  2s;
 	opacity: 0;
 	z-index: 0;
 	visibility: hidden;
 }
 
-@-webkit-keyframes blink {
-	0% { opacity: 0; visibility: visible;}
-	50% { opacity: 1; visibility: visible;}
-	100% { opacity: 0; visibility: hidden;}
-}
 @keyframes blink {
 	0% { opacity: 0; visibility: visible;}
 	50% { opacity: 1; visibility: visible;}
 	100% { opacity: 0; visibility: hidden;}
 }
 
-.b-form__form .b-field {
-	width: 300px;
-	margin-bottom: 20px;
-	margin-right: 150px;
-	float: left;
-	position: relative;
-}
-
-.b-form__form .b-field:nth-of-type(3n) {
-	margin-right: 0;
-}
-
-.b-form__form .b-field > label {
-	display: none;
-}
-
-.b-form__form .b-field input[type='text'],
-.b-form__form .b-field input[type='number'],
-.b-form__form .b-field input[type='email'],
-.b-form__form .b-field select {
-	width: @full-size;
-	height: 30px;
-	border: 1px solid #c1c1c1;
-	border-radius: 2px;
-	padding-left: 9px;
-	box-sizing: border-box;
-	outline: none;
-}
-
-.b-form__form .b-form__submit {
+.b-form__submit {
 	width: 300px;
 	height: 35px;
 	border-radius: 2px;
@@ -79,57 +89,16 @@
 	cursor: pointer;
 }
 
-.b-form__form .b-form__submit:hover {
+.b-form__submit:hover {
 	background: @blue;
 }
 
-/* Old */
-.b-field__element {
-	margin: 10px 0;
-}
-
-.b-field select,
-.b-field__element input {
-	background: @field-bg;
-	width: 300px;
-	color: @field-color;
-	padding: 5px;
-	border: 1px solid @field-border-color;
-	box-sizing: border-box;
-	appearance: none;
-	-moz-appearance: none;
-	-webkit-appearance: none;
-}
-
-.b-field select:focus{
-	outline: none;
-}
-
-.b-field__element textarea {
-	width:  300px;
-	box-sizing: border-box;
-	height: 150px;
-	resize: none;
-	border: 1px solid @field-border-color;
-	background: @field-bg;
-	padding: 5px 0 0 5px;
-	color: @field-color;
-}
-
-.b-field__element textarea:focus {
-	outline: none;
-}
-
-.b-field__errors {
-	background: @error;
-}
-
 .b-form__submit:disabled {
-	background: silver url(/static/contacts/img/loading_icon.gif) no-repeat center!important;
-	background-size: 16px!important;
+	background: @blue - 10% url(/static/contacts/img/loading_icon.gif) no-repeat center;
+	background-size: 16px 16px;
 	cursor: wait;
-	color: @dark;
-	text-indent: -9999em;
+	// text-indent: -9999em;
+	color: rgba(255, 255, 255, 0.2);
 }
 
 .b-form__success_message {
@@ -139,11 +108,8 @@
 	color: @blue;
 }
 
+// Modifications
 .m-form__sended .b-form__success_message {
-	display: block;
-}
-
-.b-form__form {
 	display: block;
 }
 

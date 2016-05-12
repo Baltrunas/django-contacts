@@ -23,8 +23,8 @@
 				m-field_{{ field.name }}
 			'>
 				<label class='b-field__label' for='id_{{ field.name }}'>{{ field.label }}:</label>
-				<ul class='b-field__errors'>{% for error in field.errors %}<li class='b-field__errors_error'>{{ error }}</li>{% endfor %}</ul>
 				<div class='b-field__field'>{{ field }}</div>
+				<ul class='b-field__errors'>{% for error in field.errors %}<li class='b-field__errors_error'>{{ error }}</li>{% endfor %}</ul>
 			</div>
 		{% endfor %}
 
