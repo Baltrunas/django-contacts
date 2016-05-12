@@ -1,3 +1,53 @@
+/* New */
+
+.b-form__form .b-field {
+	width: 300px;
+	margin-bottom: 20px;
+	margin-right: 150px;
+	float: left;
+	position: relative;
+}
+
+.b-form__form .b-field:nth-of-type(3n) {
+	margin-right: 0;
+}
+
+.b-form__form .b-field > label {
+	display: none;
+}
+
+.b-form__form .b-field input[type='text'],
+.b-form__form .b-field input[type='number'],
+.b-form__form .b-field input[type='email'],
+.b-form__form .b-field select {
+	width: @full-size;
+	height: 30px;
+	border: 1px solid #c1c1c1;
+	border-radius: 2px;
+	padding-left: 9px;
+	box-sizing: border-box;
+	outline: none;
+}
+
+.b-form__form .b-form__submit {
+	width: 300px;
+	height: 35px;
+	float: right;
+	border-radius: 2px;
+	color: white;
+	background: @blue;
+	text-align: center;
+	font-size: 16px;
+	line-height: 2.2;
+	border: none;
+	cursor: pointer;
+}
+
+.b-form__form .b-form__submit:hover {
+	background: @blue;
+}
+
+/* Old */
 .b-field__element {
 	margin: 10px 0;
 }
