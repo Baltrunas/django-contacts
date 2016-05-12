@@ -4,12 +4,11 @@
 
 .b-field select,
 .b-field__element input {
-	background: #f7f7f7;
-	border: 1px solid #f3f3f3;
+	background: @field-bg;
 	width: 300px;
-	color: #515151;
+	color: @field-color;
 	padding: 5px;
-	border: 1px solid #ccc;
+	border: 1px solid @field-border-color;
 	box-sizing: border-box;
 	appearance: none;
 	-moz-appearance: none;
@@ -25,10 +24,10 @@
 	box-sizing: border-box;
 	height: 150px;
 	resize: none;
-	border: 1px solid #ccc;
-	background: #f7f7f7;
+	border: 1px solid @field-border-color;
+	background: @field-bg;
 	padding: 5px 0 0 5px;
-	color: #515151;
+	color: @field-color;
 }
 
 .b-field__element textarea:focus {
@@ -39,11 +38,18 @@
 	background: @error;
 }
 
+.b-form__submit:disabled {
+	background: silver url(/static/contacts/img/loading_icon.gif) no-repeat 70px 10px!important;
+	background-size: 16px!important;
+	cursor: wait;
+	color: @dark;
+}
+
 .b-form__success_message {
 	display: none;
 	text-align: center;
 	font-size: 18px;
-	color: #0068b4;
+	color: @blue;
 }
 
 .m-form__sended .b-form__success_message {
