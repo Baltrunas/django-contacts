@@ -11,36 +11,28 @@
 .b-field {
 	width: @field-size;
 	position: relative;
-	margin-bottom: 20px; // prolject (var)
-	margin-right: 150px; // prolject (var)
-	float: left; // prolject
-}
-
-// project
-.b-field:nth-of-type(3n) {
-	margin-right: 0;
 }
 
 .b-field__label {
-	display: none; // project
+	color: @contacts-main-color;
 }
 
 .b-field__field input,
 .b-field__field select {
 	width: @full-size;
-	height: 30px; // var
-	border: 1px solid @field-border-color; // var
+	height: @field-input-height;
+	border: 1px solid @field-border-color;
 	border-radius: 2px;
 	padding-left: 9px;
 	box-sizing: border-box;
 	outline: none;
-	color: @field-color; // base-color field-color?
+	color: @field-color;
 }
 
 .b-field__field textarea {
 	width:  @full-size;
 	box-sizing: border-box;
-	height: 150px; // var
+	height: @field-textarea-height;
 	resize: none; // ?
 	border: 1px solid @field-border-color;
 	background: @field-bg;
@@ -55,11 +47,11 @@
 	position: absolute;
 	bottom: 0;
 	width: @full-size;
-	height: 30px;
+	height: @field-input-height;
 	border-radius: 2px;
-	background: @error; // ?
+	background: @error-color;
 	border: none;
-	color: #fff;
+	color: white;
 	text-align: center;
 	line-height: 2.2;
 	font-size: 14px;
