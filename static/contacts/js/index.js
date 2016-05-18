@@ -1,10 +1,10 @@
 $(function() {
 
-$('.b-field__errors:empty').each(function() {
-	if($(this).empty()) {
-		$(this).hide();
-	}
-});
+// $('.b-field__errors:empty').each(function() {
+// 	if($(this).empty()) {
+// 		$(this).hide();
+// 	}
+// });
 
 $('.b-form .b-form__submit').on('click', function(e) {
 	$this = $(this);
