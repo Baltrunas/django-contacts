@@ -32,3 +32,9 @@ def form_config(context, slug, tpl='contacts/form.html'):
 
 	t = template.loader.get_template(tpl)
 	return t.render(template.Context(context))
+
+
+
+@register.filter(name='field_type')
+def field_type(field):
+	return field.field.widget.__class__.__name__
