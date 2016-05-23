@@ -25,6 +25,11 @@
 				<label class='b-field__label' for='id_{{ field.name }}'>{{ field.label }}:</label>
 				<div class='b-field__field'>{{ field }}</div>
 				<ul class='b-field__errors'>{% for error in field.errors %}<li class='b-field__errors_error'>{{ error }}</li>{% endfor %}</ul>
+				{% if field.help_text %}
+					<div class='b-field__help_text'>
+						{{ field.help_text }}
+					</div>
+				{% endif %}
 			</div>
 		{% endfor %}
 
