@@ -152,8 +152,22 @@ class FormLog(models.Model):
 	def __unicode__(self):
 		return 'Request #%s from %s' % (self.pk, self.created_at)
 
-	def get_data(self):
-		return json.loads(self.data)
+	def fields(self):
+		form_data = json.loads(self.data)
+		data = []
+		for key in form_data:
+			field = {}
+			field['key'] = key
+			field['value'] = form_data[key]
+			field['label'] = self.form_config.fields.get(name=key).label
+
+			data.append(field)
+		return data
+
+	def __init__(self, *args, **kwargs):
+		super(FormLog, self).__init__(*args, **kwargs)
+		for field in self.fields():
+			setattr(self, field['key'], field['value'])
 
 	class Meta:
 		ordering = ['-created_at']

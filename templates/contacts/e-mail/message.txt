@@ -1,9 +1,9 @@
-{% load i18n %}
-{% load object_dict %}
-{% trans "New message" %}: «{{ message.subject }}»
-
+{% trans "Form" %}: {{ instance.form_config }}
+{% trans "Referrer" %}: {{ instance.referrer }}
+IP: {{ instance.ip }}
+{% trans "Created at" %}: {{ instance.created_at }}
 --- ✄ -----------------------
-{% for field in message|object_dict %}
-{{ field.verbose_name }}: {{ field.display }}
+{% for field in instance.fields %}
+{{ field.label }}: {{ field.value }}
 {% endfor %}
 --- ✄ -----------------------

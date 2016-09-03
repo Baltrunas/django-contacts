@@ -1,19 +1,33 @@
-{% extends "e-mail/base.html" %}
+{% extends "contacts/e-mail/base.html" %}
 
 {% load i18n %}
-{% load object_dict %}
 
 {% block content %}
-
-<h1>{% trans "New message" %}: «{{ message.subject }}»</h1>
-
-<table class='b-table'>
-	{% for field in message|object_dict %}
-		<tr class='b-table__row'>
-			<td class="b-table__name">{{ field.verbose_name }}</td>
-			<td class="b-table__value">{{ field.display }}</td>
-		</tr><!-- b-table -->
+<table class='b-data'>
+	<tr class='b-data__row'>
+		<td class='b-data__metakey'>{% trans "Form" %}</td>
+		<td class='b-data__value'>{{ instance.form_config }}</td>
+	</tr>
+	<tr class='b-data__row'>
+		<td class='b-data__metakey'>{% trans "Referrer" %}</td>
+		<td class='b-data__value'>
+			<a href='{{ instance.referrer }}'>{{ instance.referrer }}</a>
+		</td>
+	</tr>
+	<tr class='b-data__row'>
+		<td class='b-data__metakey'>IP</td>
+		<td class='b-data__value'>{{ instance.ip }}</td>
+	</tr>
+	<tr class='b-data__row'>
+		<td class='b-data__metakey'>{% trans "Created at" %}</td>
+		<td class='b-data__value'>{{ instance.created_at }}</td>
+	</tr>
+	{% for field in instance.fields %}
+		<tr class='b-data__row m-row__{{ field.name }}'>
+			<td class='b-data__key'>{{ field.label }}</td>
+			<td class='b-data__value'>{{ field.value }}&nbsp;</td>
+		</tr>
 	{% endfor %}
 </table>
 
-{% endblock content %}
+{% endblock %}

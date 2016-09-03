@@ -1,0 +1,18 @@
+{% load abs_puth %}
+
+{# <link rel='stylesheet' type='text/css' href='{% abs_puth "base" "templates/email/css/style.css" %}'> #}
+
+
+<style type="text/css">
+	{% include "contacts/e-mail/css/style.css" %}
+</style>
+
+{# <div class='b-header'> #}
+	{# <a href='{{ site.domain }}' class='b-logo'> #}
+		{# {{ site.name }} #}
+	{# </a> #}
+{# </div> #}
+
+{% block content %}{% endblock %}
+
+{# <div class='b-footer'>FOOTER</div> #}
