@@ -30,8 +30,8 @@ $('.b-form .b-form__submit').on('click', function(e) {
 					for (var error in data.errors[field]) {
 						error_text = data.errors[field][error];
 						$('<li class="b-field__errors_error">' + error_text + '</li>').appendTo(errors_list);
-						console.log('text');
 					}
+					console.log(errors_list);
 
 					// errors_list.fadeIn(300).fadeOut(2000);
 				} // end for data.errors
