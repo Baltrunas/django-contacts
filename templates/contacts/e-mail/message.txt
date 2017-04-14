@@ -1,3 +1,4 @@
+{% load i18n %}
 {% trans "Form" %}: {{ instance.form_config }}
 {% trans "Referrer" %}: {{ instance.referrer }}
 IP: {{ instance.ip }}
