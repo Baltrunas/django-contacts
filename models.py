@@ -116,6 +116,7 @@ class FormField(models.Model):
 	label = models.CharField(_('Label'), max_length=128)
 	help_text = models.CharField(_('Help text'), max_length=1024, null=True, blank=True)
 	name = models.SlugField(_('Name'), max_length=100)
+	group = models.CharField(_('Group'), max_length=64, default='data')
 
 	field_type = models.IntegerField(_('Type'), choices=fields.NAMES)
 

@@ -8,6 +8,7 @@ from . import fields
 class FormConfigForm(Form):
 
 	def __init__(self, form_config, *args, **kwargs):
+		self.form_config = form_config
 		initial = kwargs.pop('initial', {})
 
 		super(FormConfigForm, self).__init__(*args, **kwargs)
@@ -23,15 +24,10 @@ class FormConfigForm(Form):
 			}
 
 			arg_names = field_class.__init__.__code__.co_varnames
-			# if 'max_length' in arg_names:
-				# field_args['max_length'] = settings.FIELD_MAX_LENGTH
 
 			# Choices
 			if 'choices' in arg_names:
 				choices = field.get_choices()
-			# 	if (field.field_type == fields.SELECT and
-			# 			field.default not in [c[0] for c in choices]):
-			# 		choices.insert(0, ("", field.placeholder_text))
 				field_args['choices'] = choices
 
 			if field_widget is not None:
@@ -43,23 +39,18 @@ class FormConfigForm(Form):
 			if field.placeholder:
 				self.fields[field_key].widget.attrs['placeholder'] = field.placeholder
 
+	def groups(self):
+		groups = []
+		field_groups = self.form_config.fields.order_by('group').distinct().values_list('group', flat=True)
+		for group in field_groups:
+			fields = []
+			for field_name in self.form_config.fields.filter(group=group):
+				for ff in self.visible_fields():
+					if ff.name == field_name.name:
+						fields.append(ff)
+			groups.append({
+				'name': group,
+				'fields': fields
+			})
 
-
-# Forms FROM LP!
-# from django import forms
-# from django.utils.translation import ugettext_lazy as _
-
-# from .models import TariffOrder
-
-
-# class Html5EmailInput(forms.widgets.Input):
-# 	input_type = 'email'
-
-# class TariffOrderForm(forms.ModelForm):
-# 	name = forms.CharField(label=_('Name'),max_length=200, widget=forms.TextInput(attrs={'required': 'required', 'placeholder': _('Name')}))
-# 	phone = forms.CharField(label=_('Phone'), max_length=200, widget=forms.TextInput(attrs={'required': 'required', 'placeholder': _('Phone')}))
-# 	email = forms.EmailField(label=_('E-Mail'), max_length=200, widget=Html5EmailInput(attrs={'required': 'required', 'placeholder': _('info@express-page.ru')}))
-
-# 	class Meta:
-# 		model = TariffOrder
-# 		exclude = ['user', 'site', 'tariff', 'total_price']
+		return groups

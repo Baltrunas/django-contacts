@@ -1,40 +1,56 @@
 {% load i18n %}
 
 <div class='
-	b-form
-	m-form__{{ form_config.slug }}
-	{% if form_config.send %}m-form__sended{% endif %}
-	'>
+	form
+	form--{{ form_config.slug }}
+	{% if form_config.send %}form--sended{% endif %}
+'>
 
-	<h3 class='b-form__title'>{{ form_config.title }}</h3>
+	<h3 class='form__title'>{{ form_config.title }}</h3>
 
-	<form class='b-form__form' method='post' action='' id='form-{{ form_config.slug }}'>
+	<form class='form__form' method='post' action='' id='form-{{ form_config.slug }}'>
 		{% csrf_token %}
 
 		{% for field in form.hidden_fields %}
 			{{ field }}
 		{% endfor %}
 
-		{% for field in form_config_form.visible_fields %}
-			<div class='
-				b-field
-				{% if field.field.required %}m-field_required{% endif %}
-				{% if field.errors %}m-field_error{% endif %}
-				m-field_{{ field.name }}
-			'>
-				<label class='b-field__label' for='id_{{ field.name }}'>{{ field.label }}:</label>
-				<div class='b-field__field'>{{ field }}</div>
-				<ul class='b-field__errors'>{% for error in field.errors %}<li class='b-field__errors_error'>{{ error }}</li>{% endfor %}</ul>
-				{% if field.help_text %}
-					<div class='b-field__help_text'>
-						{{ field.help_text }}
+		{% for group in form_config_form.groups %}
+			<fieldset>
+				<legend>{{ group.name }}</legend>
+
+				{% for field in group.fields %}
+					<div class='
+						field
+						field--{{ field.name }}
+						field--required_{{ field.field.required }}
+						{% if field.errors %}field--error{% endif %}
+					'>
+						<label class='field__label' for='id_{{ field.name }}'>{{ field.label }}:</label>
+						<div class='field__field'>{{ field }}</div>
+						{% spaceless %}
+						<ul class='field__errors'>
+							{% for error in field.errors %}
+								<li class='b-field__errors_error'>{{ error }}</li>
+							{% endfor %}
+						</ul>
+						{% endspaceless %}
+						{% if field.help_text %}
+							<div class='field__help_text'>{{ field.help_text }}</div>
+						{% endif %}
 					</div>
-				{% endif %}
-			</div>
+				{% endfor %}
+
+			</fieldset>
+			{% comment %}
+				
+
+			{% endcomment %}
+
 		{% endfor %}
 
-		<input type='submit' name='submit' value='{{ form_config.submit_name }}' class='b-form__submit' data-url='{{ form_config.get_absolute_url }}' data-form='{{ form_config.slug }}'>
+		<input class='button' type='submit' name='submit' value='{{ form_config.submit_name }}' data-url='{{ form_config.get_absolute_url }}' data-form='{{ form_config.slug }}'>
 	</form><!-- b-form__form -->
 
-	<div class='b-form__success_message'>{{ form_config.success_message|safe }}</div>
+	<div class='form__message--success'>{{ form_config.success_message|safe }}</div>
 </div><!-- b-form -->
