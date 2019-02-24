@@ -1,6 +1,5 @@
 import json
 from django.db import models
-
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.sites.models import Site
@@ -61,7 +60,7 @@ class Office(models.Model):
 		for feature in self.features.all():
 			setattr(self, feature.key, feature.value)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.name
 
 	class Meta:
@@ -71,12 +70,12 @@ class Office(models.Model):
 
 
 class OfficeFeature(models.Model):
-	office = models.ForeignKey(Office, verbose_name=_('Office'), related_name='features')
+	office = models.ForeignKey(Office, verbose_name=_('Office'), related_name='features', on_delete=models.PROTECT)
 	name = models.CharField(_('Name'), max_length=128)
 	key = models.SlugField(_('Key'), max_length=128)
 	value = models.TextField(_('Value'), null=True, blank=True)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.name
 
 	class Meta:
@@ -89,20 +88,20 @@ class FormConfig(models.Model):
 	title = models.CharField(_('Title'), max_length=128)
 	slug = models.SlugField(_('Slug'), max_length=128, unique=True)
 	submit_name = models.CharField(_('Submit bottom name'), max_length=128)
+	submit_group = models.CharField(_('Submit group'), max_length=128, blank=True, null=True)
 
-	# error_message = models.TextField(_('Error Message'), blank=True, null=True)
-	success_message = models.TextField(_('Success message'), blank=True)
+	recaptcha = models.BooleanField(_('Use reCAPTCHA'), default=False)
+	recaptcha_group = models.CharField(_('reCAPTCHA group'), max_length=128, blank=True, null=True)
+
+	message_error = models.TextField(_('Error Message'), blank=True)
+	message_success = models.TextField(_('Success message'), blank=True)
 
 	public = models.BooleanField(_('Public'), default=True)
 	created_at = models.DateTimeField(_('Created At'), auto_now_add=True)
 	updated_at = models.DateTimeField(_('Updated At'), auto_now=True)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.title
-
-	@models.permalink
-	def get_absolute_url(self):
-		return ('contacts_ajax', (), {'slug': self.slug})
 
 	class Meta:
 		ordering = ['-created_at']
@@ -111,7 +110,7 @@ class FormConfig(models.Model):
 
 
 class FormField(models.Model):
-	form_config = models.ForeignKey(FormConfig, verbose_name=_('Form Config'), related_name='fields')
+	form_config = models.ForeignKey(FormConfig, verbose_name=_('Form Config'), related_name='fields', on_delete=models.CASCADE)
 
 	label = models.CharField(_('Label'), max_length=128)
 	help_text = models.CharField(_('Help text'), max_length=1024, null=True, blank=True)
@@ -126,14 +125,14 @@ class FormField(models.Model):
 	placeholder = models.CharField(_('Placeholder'), max_length=1024, null=True, blank=True)
 	order = models.IntegerField(verbose_name=_('Sort ordering'), default=500)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.name
 
 	def get_choices(self):
 		list_choices = []
 		for choice in self.choices.split('\n'):
 			list_choices.append((choice.split(': ')[0], choice.split(': ')[1]))
-		print list_choices
+		print (list_choices)
 		return list_choices
 
 	class Meta:
@@ -143,14 +142,14 @@ class FormField(models.Model):
 
 
 class FormLog(models.Model):
-	form_config = models.ForeignKey(FormConfig, verbose_name=_('Form Config'))
+	form_config = models.ForeignKey(FormConfig, verbose_name=_('Form Config'), on_delete=models.PROTECT)
 	ip = models.GenericIPAddressField(_('IP'), blank=True, null=True)
 	referrer = models.CharField(_('Referrer'), max_length=2048, blank=True, null=True)
 	data = models.TextField(_('Data'), blank=True, null=True)
 	created_at = models.DateTimeField(_('Created At'), auto_now_add=True)
 	updated_at = models.DateTimeField(_('Updated At'), auto_now=True)
 
-	def __unicode__(self):
+	def __str__(self):
 		return 'Request #%s from %s' % (self.pk, self.created_at)
 
 	def fields(self):
@@ -174,8 +173,6 @@ class FormLog(models.Model):
 		ordering = ['-created_at']
 		verbose_name = _('Form log')
 		verbose_name_plural = _('Form logs')
-
-
 
 
 class Subject(models.Model):

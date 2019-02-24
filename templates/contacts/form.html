@@ -1,56 +1,83 @@
 {% load i18n %}
 
-<div class='
+<form class='
 	form
-	form--{{ form_config.slug }}
-	{% if form_config.send %}form--sended{% endif %}
-'>
+	form--contacts
+	form--contacts_{{ form_config.slug }}
+	form--status_{{ form_config.status }}
+	'
+	method='post'
+	action=''
+	id='form-{{ form_config.slug }}'
 
+	data-form='{{ form_config.slug }}'
+	data-url_send='{% url "contacts_send" form_config.slug %}'
+	data-url_validate='{% url "contacts_validate" form_config.slug %}'
+>
+	{% csrf_token %}
+	{% for field in form.hidden_fields %}{{ field }}{% endfor %}
+
+	
 	<h3 class='form__title'>{{ form_config.title }}</h3>
+	<div class='form__message--success'>{{ form_config.message_success|safe }}</div>
+	<div class='form__message--error'>{{ form_config.message_error|safe }}</div>
 
-	<form class='form__form' method='post' action='' id='form-{{ form_config.slug }}'>
-		{% csrf_token %}
+	<div class='form__group-list'>
+	{% for group in form_config_form.groups %}
+		<fieldset class='group--{{ group.name|slugify }}'>
+			<legend>{{ group.name }}</legend>
 
-		{% for field in form.hidden_fields %}
-			{{ field }}
-		{% endfor %}
+			{% for field in group.fields %}
+				<div class='
+					field
+					field--{{ field.name }}
+					field--required_{{ field.field.required }}
+					{% if field.errors %}field--error{% endif %}
+				'>
+					<label class='field__label' for='id_{{ field.name }}'>{{ field.label }}:</label>
+					<div class='field__field'>{{ field }}</div>
+					{% spaceless %}
+					<ul class='field__errors'>
+						{% for error in field.errors %}
+							<li class='field__errors_error'>{{ error }}</li>
+						{% endfor %}
+					</ul>
+					{% endspaceless %}
+					{% if field.help_text %}
+						<div class='field__help_text'>{{ field.help_text }}</div>
+					{% endif %}
+				</div>
+			{% endfor %}
 
-		{% for group in form_config_form.groups %}
-			<fieldset>
-				<legend>{{ group.name }}</legend>
 
-				{% for field in group.fields %}
-					<div class='
-						field
-						field--{{ field.name }}
-						field--required_{{ field.field.required }}
-						{% if field.errors %}field--error{% endif %}
-					'>
-						<label class='field__label' for='id_{{ field.name }}'>{{ field.label }}:</label>
-						<div class='field__field'>{{ field }}</div>
-						{% spaceless %}
-						<ul class='field__errors'>
-							{% for error in field.errors %}
-								<li class='b-field__errors_error'>{{ error }}</li>
-							{% endfor %}
-						</ul>
-						{% endspaceless %}
-						{% if field.help_text %}
-							<div class='field__help_text'>{{ field.help_text }}</div>
-						{% endif %}
-					</div>
-				{% endfor %}
+			{% if form_config.recaptcha and form_config.recaptcha_group == group.name %}
+				{% if not captcha_is_valid and request.POST %}
+					<p class='captcha--error'>{% trans "The captcha is incorrect - please try again." %}</p>
+				{% endif %}
+				<script src='https://www.google.com/recaptcha/api.js'></script>
+				<div class='g-recaptcha' data-sitekey='{{ RECAPTCHA_SITEKEY }}'></div>
+			{% endif %}
 
-			</fieldset>
-			{% comment %}
-				
+			{% if form_config.submit_group == group.name %}
+				<button class='button button--submit' type='submit'>
+					{{ form_config.submit_name }}
+				</button>
+			{% endif %}
+		</fieldset>
+	{% endfor %}
+	</div>
 
-			{% endcomment %}
+	{% if form_config.recaptcha and not form_config.recaptcha_group %}
+		{% if not captcha_is_valid and request.POST %}
+			<p class='captcha--error'>{% trans "The captcha is incorrect - please try again." %}</p>
+		{% endif %}
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+		<div class='g-recaptcha' data-sitekey='{{ RECAPTCHA_SITEKEY }}'></div>
+	{% endif %}
 
-		{% endfor %}
-
-		<input class='button' type='submit' name='submit' value='{{ form_config.submit_name }}' data-url='{{ form_config.get_absolute_url }}' data-form='{{ form_config.slug }}'>
-	</form><!-- b-form__form -->
-
-	<div class='form__message--success'>{{ form_config.success_message|safe }}</div>
-</div><!-- b-form -->
+	{% if not form_config.submit_group %}
+		<button class='button button--submit' type='submit'>
+			{{ form_config.submit_name }}
+		</button>
+	{% endif %}
+</form><!-- .form .form--contacts__{{ form_config.slug }} -->

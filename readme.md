@@ -6,7 +6,8 @@ Simple contact form app.
 
 # Install
 * Add to INSTALLED_APPS 'apps.contacts',
-* Add to urls.py url(r'^contacts/', include('apps.contacts.urls')),
+* Add to urls.py path('contacts/', include('apps.contacts.urls')),
+
 * Add to CONTEXT_PROCESSORS 'apps.contacts.context_processors.offices',
 * manage.py migrare contacts
 
@@ -15,6 +16,8 @@ Simple contact form app.
 
 ```html
 <link rel='stylesheet' href='/static/contacts/css/all.css' type='text/css'>
+<link rel='stylesheet' href='/static/contacts/js/index.js' type='text/css'>
+
 ```
 
 # ToDo

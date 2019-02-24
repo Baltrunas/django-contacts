@@ -1,8 +1,9 @@
-from django.conf.urls import url
-
+from django.urls import path
 from . import views
 
 
 urlpatterns = [
-	url(r'^(?P<slug>[-_\w]+)/$', views.ajax, name='contacts_ajax'),
+	path('<slug:slug>/', views.send, name='contacts_send'),
+	path('<slug:slug>/validate/', views.validate, name='contacts_validate'),
 ]
+

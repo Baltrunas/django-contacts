@@ -49,7 +49,7 @@ class FormConfigForm(Form):
 					if ff.name == field_name.name:
 						fields.append(ff)
 			groups.append({
-				'name': group,
+				'name': group.split(': ')[1],
 				'fields': fields
 			})
 
