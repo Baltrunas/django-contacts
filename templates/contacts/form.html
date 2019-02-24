@@ -34,7 +34,7 @@
 					field--required_{{ field.field.required }}
 					{% if field.errors %}field--error{% endif %}
 				'>
-					<label class='field__label' for='id_{{ field.name }}'>{{ field.label }}:</label>
+					<label class='field__label' for='id_{{ field.name }}'>{{ field.label|safe }}:</label>
 					<div class='field__field'>{{ field }}</div>
 					{% spaceless %}
 					<ul class='field__errors'>

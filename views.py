@@ -23,7 +23,7 @@ def send(request, slug):
 	if 'g-recaptcha-response' in request.POST and request.POST['g-recaptcha-response']:
 		url = 'https://www.google.com/recaptcha/api/siteverify'
 		data = {
-			'secret': settings.CAPTCHA_SECRET,
+			'secret': settings.RECAPTCHA_SECRET,
 			'response': request.POST['g-recaptcha-response'],
 		}
 		response = requests.get(url, params=data)
